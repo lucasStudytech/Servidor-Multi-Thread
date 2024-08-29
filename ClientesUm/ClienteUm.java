@@ -5,23 +5,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ClienteUm {
 
     public static void main(String[] args) {
 
 
-        final String SERVER_ADDRESS = "localhost"; // Endereço do servidor
-        final int SERVER_PORT = 3030; // Porta do servidor
+        final String SERVER_ADDRESS = "localhost"; 
+        final int SERVER_PORT = 3030; 
 
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
 
-            
+        //! pega os byte do socket e transforma em caracteres
         InputStreamReader input = new InputStreamReader(socket.getInputStream());
-        BufferedReader in = new BufferedReader(input);
+
+        //!buffer para armazenar os caracteres.
+        //?Exemplo de leitura dos caracteres : " String line = in.readLine();"
+        BufferedReader in = new BufferedReader(input);      
+
+        //!escreve texto em formato para um fluxo de saída de caracteres
+        //?Exemplo de escrita de caracteres: "out.println("Hello World");"
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        Scanner scanner = new Scanner(System.in)) {
+
+        //!o System.in  é o fluxo de entrada padrão (teclado)
+        //!InputStreamReader converte bytes do teclado em caracteres.
+        //!bufferedReader é um objeto que armazena os caracteres
+        BufferedReader userInputReader = new BufferedReader(new InputStreamReader(System.in));){ //aqui começa o try 
           
 
             // Cria e inicia a thread para ler mensagens do servidor
@@ -34,14 +43,12 @@ public class ClienteUm {
             System.out.println("Digite 'Sair' para encerrar a conexão");
             String userInput;
 
-            while (true) {
-                userInput = scanner.nextLine();
+            while ((userInput = userInputReader.readLine()) != null) {
                 out.println(userInput);
-
-                if ("Sair".equalsIgnoreCase(userInput)) {
-                    break;
-                }
+                
+               
             }
+
 
         } catch (IOException e) {
             System.out.println("Erro de conexão: " + e.getMessage());

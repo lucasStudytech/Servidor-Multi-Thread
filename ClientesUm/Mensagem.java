@@ -16,10 +16,11 @@ public class Mensagem implements Runnable {
         public void run() {
             String message;
             try {
+                     //!loop para ler mensagens
                 while ((message = in.readLine()) != null) {
 
                  
-                    System.out.println("Recebido: " + message);
+                    System.out.println( message);
                 }
             } catch (IOException e) {
                 System.out.println("Erro ao ler mensagens: " + e.getMessage());

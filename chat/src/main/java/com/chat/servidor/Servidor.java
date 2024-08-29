@@ -15,14 +15,16 @@ import java.util.List;
 public class Servidor {
     
     
-    //!define a porta do servidor
-    private static final int port = 3030;
+  
+ 
 
     //?cria uma lista de clientes e armazena os clientes conectados
-    private static final List<ClientesInfo> clientes = new ArrayList<>();
+    private static final List<EstruturaClientes > clientes = new ArrayList<>();
 
     public static void main(String[] args) {
         
+          //!define a porta do servidor
+        final int port = 3030;
 
         //!inicia o seervidor em uma porta especifica
         try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -56,13 +58,12 @@ public class Servidor {
                 String nome = clientIp;
                               
                  //!cria um objeto do tipo ClientesInfo e passa os parametros
-                ClientesInfo cliente = new ClientesInfo(clientSocket, out, in, nome, clientes);
+              EstruturaClientes cliente = new EstruturaClientes (clientSocket, out, in, nome, clientes);
                 
                 //!adiciona o cliente na lista de clientes conectados
                 cliente.addClient();
 
-                //! Enviar uma mensagem de boas-vindas para o cliente
-                cliente.broadcastMessage(nome +  " entrou no chat");
+             
 
                 //! Iniciar uma nova thread para o cliente
                 Thread thread = new Thread(cliente);
